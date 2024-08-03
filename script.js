@@ -95,10 +95,10 @@ const atualizarListaDeAtividades = () => {
     return
   }
 
-  if(sessionStorage.hasOwnProperty("usuarios")){
+  if(localStorage.hasOwnProperty("usuarios")){
     // Recuperar os valores da propriedade usuarios do localStorage
     // Converte de String para Object
-    atividades = JSON.parse(sessionStorage.getItem("usuarios"));
+    atividades = JSON.parse(localStorage.getItem("usuarios"));
 }
 
   for (let atividade of atividades) {
@@ -137,15 +137,15 @@ const salvarAtividade = (event) => {
 
 
   // Verifica se a propriedade no localStorage
-  if(sessionStorage.hasOwnProperty("usuarios")){
+  if(localStorage.hasOwnProperty("usuarios")){
     // Recuperar os valores da propriedade usuarios do localStorage
     // Converte de String para Object
-    atividades = JSON.parse(sessionStorage.getItem("usuarios"));
+    atividades = JSON.parse(localStorage.getItem("usuarios"));
 }
 
 
   atividades = [novaAtividade, ...atividades]
-  sessionStorage.setItem("usuarios", JSON.stringify(atividades));
+  localStorage.setItem("usuarios", JSON.stringify(atividades));
   atualizarListaDeAtividades()
 }
 
@@ -232,6 +232,6 @@ const concluirAtividade = (event) => {
   atividade.finalizada = !atividade.finalizada
   debugger; 
 
-  sessionStorage.setItem("usuarios", JSON.stringify(atividades))
+  localStorage.setItem("usuarios", JSON.stringify(atividades))
   debugger;     
 }
