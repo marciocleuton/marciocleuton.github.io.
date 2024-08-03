@@ -1,109 +1,113 @@
-//estudando sobre bibliotecas e códigos de terceiros
-
+// bibliotecas e códigos de terceiros
 const formatador = (data) => {
-//console.log(dayjs(data).format('dddd'))
   return {
-  dia: {
-   numerico:dayjs(data).format('DD'),
-   semana: {
-    curto:dayjs(data).format('ddd'),
-    longo:dayjs(data).format('dddd'),
-     }
-   },
-   mes:{
+    dia: {
+      numerico: dayjs(data).format('DD'),
+      semana: {
+        curto: dayjs(data).format('ddd'),
+        longo: dayjs(data).format('dddd'),
+      }
+    },
     mes: dayjs(data).format('MMMM'),
     hora: dayjs(data).format('HH:mm')
-   }
   }
 }
-formatador (new Date ('2024-09-08'))
 
-//object {} sempre vai ter uma propriedade e um valor(tipo de dado pode ser sting, number, function, objeto..)
-  const atividade =  {
-    nome:"Almoço",
-    data: new Date("2024-09-08 10:00"),
-    finalizada: true //true ou false = boolian
-    }
+// object {}
+const atividade = {
+  nome: "Almoço",
+  data: new Date("2024-07-08 10:00"),
+  finalizada: true
+}
 
-//lista,array, vetor []
-let atividades =  [
+// lista, array, vetor []
+let atividades = [
   atividade,
   {
-    nome: 'Almoco em familia',
-    data: new Date ("2024-09-07 12:00"),
+    nome: 'Academia em grupo',
+    data: new Date("2024-07-09 12:00"),
     finalizada: false
   },
   {
-    nome: 'Almoço Aquiraz',
-    data: new Date ("2024-09-14"),
-    finalizada: false
-  }
+    nome: 'Gamming session',
+    data: new Date("2024-07-09 16:00"),
+    finalizada: true
+  },
 ]
 
-//atividades =[]
+// atividades = []
 
-// {}arrow function , escrever uma sequencia de codigo
+// arrow function
 const criarItemDeAtividade = (atividade) => {
+
   let input = `
-  <input
-  onchange = "concluirAtividade(event)"
+  <input 
+  onchange="concluirAtividade(event)"
   value="${atividade.data}"
-  type="checkbox"  
+  type="checkbox" 
   `
-  
-if (atividade.finalizada){
-  input += input + 'checked'
-}
-input +=  '>' //aplicacao de condicionais
 
-const formatar = formatador (atividade.data);
+  if (atividade.finalizada) {
+    input += 'checked'
+  }
 
-//alert (input)
+  input += '>'
+
+  const formatar = formatador(atividade.data);
 
   return `
-  <div class= "card-bg">
-    ${input} 
+    <div class="card-bg">
+      ${input}
 
-    <div>
+      <div>
         <svg class="active" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M7.50008 10L9.16675 11.6667L12.5001 8.33335M18.3334 10C18.3334 14.6024 14.6025 18.3334 10.0001 18.3334C5.39771 18.3334 1.66675 14.6024 1.66675 10C1.66675 5.39765 5.39771 1.66669 10.0001 1.66669C14.6025 1.66669 18.3334 5.39765 18.3334 10Z" stroke="#BEF264" style="stroke:#BEF264;stroke:color(display-p3 0.7451 0.9490 0.3922);stroke-opacity:1;" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      
+
       <svg class="inactive" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.41664 1.81836C9.46249 1.61597 10.5374 1.61597 11.5833 1.81836M11.5833 18.1817C10.5374 18.3841 9.46249 18.3841 8.41664 18.1817M14.6741 3.10086C15.5587 3.70022 16.3197 4.46409 16.9158 5.35086M1.8183 11.5834C1.6159 10.5375 1.6159 9.46255 1.8183 8.4167M16.8991 14.6742C16.2998 15.5588 15.5359 16.3198 14.6491 16.9159M18.1816 8.4167C18.384 9.46255 18.384 10.5375 18.1816 11.5834M3.1008 5.32586C3.70016 4.44131 4.46403 3.68026 5.3508 3.0842M5.3258 16.8992C4.44124 16.2998 3.6802 15.536 3.08414 14.6492" stroke="#A1A1AA" style="stroke:#A1A1AA;stroke:color(display-p3 0.6314 0.6314 0.6667);stroke-opacity:1;" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
+      
+      <span>${atividade.nome}</span>
+      </div>
 
-    <span>${atividade.nome}</span>
-    <time class="short">
+      <time class="short">
       ${formatar.dia.semana.curto}.
       ${formatar.dia.numerico} <br>
       ${formatar.hora}
-    </time>
-
-    <time class="full">
-      ${formatar.dia.semana.longo},
+      </time>
+      <time class="full">${formatar.dia.semana.longo}, 
       dia ${formatar.dia.numerico}
-      de ${formatar.mes.mes}
-      às ${formatar.mes.hora}h </tine>
-  </div>
-  `
+      de ${formatar.mes} 
+      às ${formatar.hora}h </time>
+    </div>
+    `
 }
+
+
 const atualizarListaDeAtividades = () => {
+  const section = document.querySelector('section')
+  section.innerHTML = ''
 
-const section = document.querySelector ('section')
-section.innerHTML = ''
+  // verificar se a minha lista está vazia
+  if (atividades.length == 0) {
+    section.innerHTML = `<p>Nenhuma atividade cadastrada.</p>`
+    return
+  }
 
-
-
-//verificar se a minha lista está vazia
-if (atividades.length == 0){ //diz quantos elementos tenho dentro da lista
-  section.innerHTML = `<p>Nenhuma atividade cadastrada.</p>`
-  return //toda função que encontra um return para o fluxo
-} 
-
-for(let atividade of atividades) {
-  section.innerHTML += criarItemDeAtividade(atividade)
+  if(sessionStorage.hasOwnProperty("usuarios")){
+    // Recuperar os valores da propriedade usuarios do localStorage
+    // Converte de String para Object
+    atividades = JSON.parse(sessionStorage.getItem("usuarios"));
 }
+
+  for (let atividade of atividades) {
+    section.innerHTML += criarItemDeAtividade(atividade)
+  }
+
+
+
+
 }
 
 atualizarListaDeAtividades()
@@ -113,104 +117,104 @@ const salvarAtividade = (event) => {
   const dadosDoFormulario = new FormData(event.target)
 
   const nome = dadosDoFormulario.get('atividade')
-  const dia = dadosDoFormulario.get ('dia')
-  const hora = dadosDoFormulario.get ('hora')
+  const dia = dadosDoFormulario.get('dia')
+  const hora = dadosDoFormulario.get('hora')
   const data = `${dia} ${hora}`
 
-  const novaAtividade =  {
+  const novaAtividade = {
     nome,
     data,
-    finalizada: false //sempre comeca finalizado como false
-    }
+    finalizada: false
+  }
 
-    const atividadeExiste = atividades.find((atividade) => {
-      return atividade.data == novaAtividade.data
+  const atividadeExiste = atividades.find((atividade) => {
+    return atividade.data == novaAtividade.data
+  })
 
-    })
+  if (atividadeExiste) {
+    return alert('Dia/Hora não disponível')
+  }
 
-    if (atividadeExiste) {
-      return alert ('Dia/Hora não disponível')
-    }
 
-    atividades = [atividade, ...atividades]
-    
-    atualizarListaDeAtividades()
+  // Verifica se a propriedade no localStorage
+  if(sessionStorage.hasOwnProperty("usuarios")){
+    // Recuperar os valores da propriedade usuarios do localStorage
+    // Converte de String para Object
+    atividades = JSON.parse(sessionStorage.getItem("usuarios"));
+}
+
+
+  atividades = [novaAtividade, ...atividades]
+  sessionStorage.setItem("usuarios", JSON.stringify(atividades));
+  atualizarListaDeAtividades()
 }
 
 const criarDiasSelecao = () => {
   const dias = [
-    "2024-09-07",
-    "2024-09-08",
-    "2024-09-09",
-    "2024-09-10",
-    "2024-09-11",
-    "2024-09-12",
-    "2024-09-13",
-    "2024-09-14",
-    "2024-09-15",
-    "2024-09-16",
-    "2024-09-17",
-    "2024-09-18",
-    "2024-09-19",
-    "2024-09-20",
-    "2024-09-21",
-    "2024-09-22",
-    "2024-09-23",
-    "2024-09-24",
-    "2024-09-25",
-    "2024-09-26",
-    "2024-09-27",
-    "2024-09-28",
+    '2024-02-28',
+    '2024-02-29',
+    '2024-03-01',
+    '2024-03-02',
+    '2024-03-03',
   ]
 
   let diasSelecao = ''
 
-    for(let dia of dias) {
-      const formatar = formatador(dia)
-      const diaFormatado = `
-      ${formatar.dia.numerico} de
-      ${formatar.mes.mes}
-      `
-      diasSelecao += `
-      <option value="${dia}">${diaFormatado}</option>
-      `
-    }
+  for (let dia of dias) {
+    const formatar = formatador(dia)
+    const diaFormatado = `
+    ${formatar.dia.numerico} de 
+    ${formatar.mes}
+    `
+    diasSelecao += `
+    <option value="${dia}">${diaFormatado}</option>
+    `
+  }
 
   document
-  .querySelector('select[name="dia"]')
-  .innerHTML = diasSelecao
+    .querySelector('select[name="dia"]')
+    .innerHTML = diasSelecao
+
 }
-criarDiasSelecao ()
+criarDiasSelecao()
+
 
 const criarHorasSelecao = () => {
   let horasDisponiveis = ''
 
-  for (let i = 6; i < 21; i++) {
+  for (let i = 6; i < 23; i++) {
     const hora = String(i).padStart(2, '0')
-    horasDisponiveis += `<option value="${hora}:00">${hora}:00</
-    option>`
-    horasDisponiveis += `<option value="${hora}:30">${hora}:30</
-    option>`
+    horasDisponiveis += `
+    <option value="${hora}:00">${hora}:00</option>`
+    horasDisponiveis += `
+    <option value="${hora}:30">${hora}:30</option>`
   }
 
   document
-  .querySelector('select[name="hora"]')
-  .innerHTML = horasDisponiveis
+    .querySelector('select[name="hora"]')
+    .innerHTML = horasDisponiveis
 }
-criarHorasSelecao ()
+criarHorasSelecao()
 
-const concluirAtividade =(event) => {
+const concluirAtividade = (event) => {
   const input = event.target
   const dataDesteInput = input.value
+
 
   const atividade = atividades.find((atividade) => {
     return atividade.data == dataDesteInput
   })
 
+
+  console.log(atividade);
+
   if (!atividade) {
     return
   }
+  debugger; 
+  atividade.finalizada = !atividade.finalizada
+  debugger; 
 
-  atividade.finalizada = !atividade.finalizada//! representa o inverso da informação
+  sessionStorage.setItem("usuarios", JSON.stringify(atividades))
+  debugger;     
 }
-
